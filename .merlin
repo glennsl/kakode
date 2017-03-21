@@ -1,8 +1,12 @@
 ####{BSB GENERATED: NO EDIT
-FLG -ppx /home/glennsl/dev.github/reasonable-vscode-starter/node_modules/bs-platform/bin/bsppx.exe
-S /home/glennsl/dev.github/reasonable-vscode-starter/node_modules/bs-platform/lib/ocaml
-B /home/glennsl/dev.github/reasonable-vscode-starter/node_modules/bs-platform/lib/ocaml
+FLG -ppx /home/glennsl/dev.github/kakode/node_modules/bs-platform/bin/bsppx.exe
+S /home/glennsl/dev.github/kakode/node_modules/bs-platform/lib/ocaml
+B /home/glennsl/dev.github/kakode/node_modules/bs-platform/lib/ocaml
 FLG -nostdlib -no-alias-deps -color always -w -40+6+7+27+32..39+44+45
+S /home/glennsl/dev.github/kakode/node_modules/bs-promise/lib/ocaml
+B /home/glennsl/dev.github/kakode/node_modules/bs-promise/lib/ocaml
+S /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
+B /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
 S src
 B lib/bs/src
 ####BSB GENERATED: NO EDIT}

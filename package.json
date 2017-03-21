@@ -11,13 +11,14 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "*"
     ],
     "main": "./lib/js/src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
+        "keybindings": [{
+            "command": "kak.escape",
+            "key": "escape",
+            "when": "editorTextFocus"
         }]
     },
     "scripts": {
@@ -25,6 +26,10 @@
         "compile": "bsb -make-world -w",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
+    },
+    "dependencies": {
+        "bs-promise": "buckletypes/bs-promise",
+        "rebase": "glennsl/rebase"
     },
     "devDependencies": {
         "vscode": "^1.0.0",

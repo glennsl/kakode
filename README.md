@@ -1,4 +1,4 @@
-# reasonable-vscode-starter
+# kakode
 
 A very rough starter project for Visual Studio Code extensions written in Reason and BuckleScript.
 
