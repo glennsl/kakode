@@ -9,6 +9,9 @@ type t = {
 let make document initalPosition =>
   { document, pos: initalPosition };
 
+let pos iter =>
+  iter.pos;
+
 let line iter =>
   iter.document
   |> TextDocument.lineAtPosition iter.pos /* unsafe? */
@@ -17,7 +20,7 @@ let line iter =>
 let get i iter => {
   let l = line iter;
 
-  i <= String.length l ? 
+  i < String.length l ? 
     Some (String.get l i) :
     None;
 };
@@ -52,7 +55,7 @@ let advance iter =>
     None
   } else {
     if (isEol iter) {
-      iter.pos = Position.translate lineDelta::1 charDelta::0 iter.pos;
+      iter.pos = Position.make (Position.line iter.pos + 1) 0;
     } else {
       iter.pos = Position.translate lineDelta::0 charDelta::1 iter.pos;
     };
@@ -61,7 +64,7 @@ let advance iter =>
 
 let advanceWhile predicate iter => {
   let break = ref false;
-  while (not !break && not (isEof iter) && current iter |> Option.map predicate |> Option.isSome) {
+  while (not !break && not (isEof iter) && current iter |> Option.exists predicate) {
     if (advance iter |> Option.isNone) {
       break := true
     }
@@ -74,7 +77,9 @@ let retreat iter =>
     None
   } else {
     if (isBol iter) {
-      iter.pos = Position.translate lineDelta::(-1) charDelta::0 iter.pos;
+      let lineIndex = Position.line iter.pos - 1;
+      let charIndex = iter.document |> TextDocument.lineAt lineIndex |> TextLine.text |> String.length;
+      iter.pos = Position.make lineIndex charIndex;
     } else {
       iter.pos = Position.translate lineDelta::0 charDelta::(-1) iter.pos;
     };
@@ -83,7 +88,7 @@ let retreat iter =>
 
 let retreatWhile predicate iter => {
   let break = ref false;
-  while (not !break && not (isBof iter) && current iter |> Option.map predicate |> Option.isSome) {
+  while (not !break && not (isBof iter) && current iter |> Option.exists predicate) {
     if (retreat iter |> Option.isNone) {
       break := true
     }

@@ -75,7 +75,7 @@ module Position = {
   external line : t => int = "" [@@bs.get];
 
   external translate : lineDelta::int => charDelta::int => position = "" [@@bs.send.pipe: t];
-  external with_ : line::int? => character::int? => unit => position = "" [@@bs.send.pipe: t];
+  external with_ : line::int? => character::int? => unit => position = "with" [@@bs.send.pipe: t];
 };
 
 module Range = {
