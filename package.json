@@ -24,6 +24,7 @@
     "scripts": {
         "vscode:prepublish": "bsb -make-world",
         "compile": "bsb -make-world -w",
+        "clean": "bsb -clean-world",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
     },

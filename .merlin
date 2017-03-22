@@ -9,4 +9,12 @@ S /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
 B /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
 S src
 B lib/bs/src
+S src/modes
+B lib/bs/src/modes
+S src/core
+B lib/bs/src/core
+S src/commands
+B lib/bs/src/commands
+S src/actions
+B lib/bs/src/actions
 ####BSB GENERATED: NO EDIT}

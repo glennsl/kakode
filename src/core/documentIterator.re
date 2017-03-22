@@ -1,5 +1,5 @@
-open Rebase;
-open Vscode;
+open Require.Option;
+open Require.Vscode;
 
 type t = {
   document: textDocument,

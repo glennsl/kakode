@@ -1,5 +1,3 @@
-type promise 'a 'e = Bs_promise.t 'a 'e;
-
 type disposable;
 type extensionContext;
 type position;
@@ -35,7 +33,7 @@ module Vscode = {
     let showInformationMessage : string => unit =
       fun message => vscode##window##showInformationMessage message;
 
-    let showQuickPick : array (Js.t {..} as 'a) => Js.t {..} => promise 'a unit =
+    let showQuickPick : array (Js.t {..} as 'a) => Js.t {..} => Js.promise 'a unit =
       fun items options => vscode##window##showQUickPick items options;
   };
 };
@@ -115,7 +113,7 @@ module TextEditor = {
   external setSelection : t => selection => unit = "selection" [@@bs.set];
   external selections : t => array selection = "" [@@bs.get];
 
-  external edit : (textEditorEdit => unit) => promise Js.boolean unit = "" [@@bs.send.pipe: t];
+  external edit : (textEditorEdit => unit) => Js.promise Js.boolean unit = "" [@@bs.send.pipe: t];
   external revealRange : range => TextEditorRevealType.t => unit = "" [@@bs.send.pipe: t];
 };
 

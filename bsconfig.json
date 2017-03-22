@@ -1,5 +1,8 @@
 {
   "name": "reasonable-vscode-starter",
-  "sources": "src",
+  "sources": [{
+    "dir": "src",
+    "subdirs": ["actions", "commands", "core", "modes"]
+  }],
   "bs-dependencies": ["bs-promise", "rebase"]
 }
