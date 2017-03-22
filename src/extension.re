@@ -1,37 +1,15 @@
-open Require.Promise;
 open Require.Vscode;
 
-let handleKey args => {
-  open Mutators;
-  open SelectionActions;
-
-  let text = args##text;
-  let editor = Vscode.Window.activeTextEditor ();
-
-  let action = 
-    switch text {
-    | "h" => selection moveLeft;
-    | "j" => selection moveDown;
-    | "k" => selection moveUp;
-    | "l" => selection moveRight;
-    | "w" => selection selectToNextWord;
-    | "e" => selection selectToNextWordEnd;
-    | "b" => selection selectToPreviousWord;
-    | "x" => selection selectLine;
-    | "%" => selection selectAll;
-    | _ => (fun _ => Promise.resolve ());
-    };
-  
-  ignore (action editor);
-};
-
-let escape _ =>
-  ();
-
 let activate context => {
+
+  let modeMachine = ModeMachine.make ();
+
   let disposables = [|
-    (Vscode.Commands.registerCommand "type" handleKey),
-    (Vscode.Commands.registerCommand "kak.escape" escape)
+    (Vscode.Commands.registerCommand "type"
+      (fun args => ModeMachine.handleKey modeMachine (String.get args##text 0))),
+
+    (Vscode.Commands.registerCommand "kak.escape"
+      (ModeMachine.escape modeMachine))
   |];
 
   let subs = context |> ExtensionContext.subscriptions;

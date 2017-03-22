@@ -3,15 +3,43 @@ type extensionContext;
 type position;
 type range;
 type selection;
+type statusBarItem;
 type textDocument;
 type textEditor;
 type textEditorEdit;
 type textLine;
 
-module Vscode = {
-  /* internal */
-  external vscode: Js.t {..} = "vscode" [@@bs.module];
+/* internal */
+external vscode: Js.t {..} = "vscode" [@@bs.module];
 
+
+/* enums */
+
+module StatusBarAlignment = {
+  type t;
+
+  let left : t = vscode##_StatusBarAlignment##_Left;
+  let right : t = vscode##_StatusBarAlignment##_Right;
+};
+
+module TextEditorCursorStyle = {
+  type t;
+
+  let block : t = vscode##_TextEditorCursorStyle##_Block;
+  let line : t = vscode##_TextEditorCursorStyle##_Line;
+};
+
+module TextEditorRevealType = {
+  type t;
+
+  let atTop : t = vscode##_TextEditorRevealType##_AtTop;
+  let default : t = vscode##_TextEditorRevealType##_Default;
+  let inCenter : t = vscode##_TextEditorRevealType##_InCenter;
+  let inCenterIfOUtsideViewport : t = vscode##_TextEditorRevealType##_InCenterIfOutsideViewport;
+};
+
+
+module Vscode = {
   module Commands = {
     let executeCommand : string => unit =
       fun command => vscode##commands##executeCommand command;
@@ -24,8 +52,11 @@ module Vscode = {
   };
 
   module Window = {
-    let activeTextEditor : unit => textEditor =
-      fun () => vscode##window##activeTextEditor;
+    let activeTextEditor : unit => option textEditor =
+      fun () => Js.Undefined.to_opt vscode##window##activeTextEditor;
+
+    let createStatusBarItem : StatusBarAlignment.t => statusBarItem =
+      fun alignment => vscode##window##createStatusBarItem alignment;
 
     let onDidChangeActiveTextEditor : (textEditor => unit) => disposable =
       fun listener => vscode##window##onDidChangeActiveTextEditor listener;
@@ -36,25 +67,6 @@ module Vscode = {
     let showQuickPick : array (Js.t {..} as 'a) => Js.t {..} => Js.promise 'a unit =
       fun items options => vscode##window##showQUickPick items options;
   };
-};
-
-
-/* enums */
-
-module TextEditorCursorStyle = {
-  type t;
-
-  external block : t = "TextEditorCursorStyle.Block" [@@bs.val] [@@bs.module "vscode"];
-  external line : t = "TextEditorCursorStyle.Line" [@@bs.val] [@@bs.module "vscode"];
-};
-
-module TextEditorRevealType = {
-  type t;
-
-  external atTop : t = "TextEditorRevealType.AtTop" [@@bs.val] [@@bs.module "vscode"];
-  external default : t = "TextEditorRevealType.Default" [@@bs.val] [@@bs.module "vscode"];
-  external inCenter : t = "TextEditorRevealType.InCenter" [@@bs.val] [@@bs.module "vscode"];
-  external inCenterIfOUtsideViewport : t = "TextEditorRevealType.InCenterIfOutsideViewport" [@@bs.val] [@@bs.module "vscode"];
 };
 
 
@@ -96,6 +108,14 @@ module Selection = {
   external start : t => position = "" [@@bs.get];
 };
 
+module StatusBarItem = {
+  type t = statusBarItem;
+
+  external setText : t => string => unit = "text" [@@bs.set];
+
+  external show : unit = "" [@@bs.send.pipe: t];
+};
+
 module TextDocument = {
   type t = textDocument;
 
@@ -108,7 +128,14 @@ module TextDocument = {
 module TextEditor = {
   type t = textEditor;
 
+  module Options = {
+    type t;
+
+    external setCursorStyle : t => TextEditorCursorStyle.t => unit = "cursorStyle" [@@bs.set];
+  };
+
   external document : t => textDocument = "" [@@bs.get];
+  external options : t => Options.t = "" [@@bs.get];
   external selection : t => selection = "" [@@bs.get];
   external setSelection : t => selection => unit = "selection" [@@bs.set];
   external selections : t => array selection = "" [@@bs.get];

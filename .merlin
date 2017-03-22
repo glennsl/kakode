@@ -9,6 +9,8 @@ S /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
 B /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
 S src
 B lib/bs/src
+S src/require
+B lib/bs/src/require
 S src/modes
 B lib/bs/src/modes
 S src/core

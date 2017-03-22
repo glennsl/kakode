@@ -103,7 +103,7 @@ let selectToPreviousWord selection editor => {
       ignore (retreatWhile Text.isWord iterator);
     };
 
-    Selection.make anchor::(pos iterator) active::end_
+    Selection.make anchor::end_ active::(pos iterator)
   }
 };
 
