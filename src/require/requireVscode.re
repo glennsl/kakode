@@ -101,7 +101,7 @@ module Selection = {
 
   external active : t => position = "" [@@bs.get];
   external anchor : t => position = "" [@@bs.get];
-  external end_ : t => position = "" [@@bs.get];
+  external end_ : t => position = "end" [@@bs.get];
   external isEmpty : t => bool = "" [@@bs.get];
   external isReversed : t => bool = "" [@@bs.get];
   external isSingleLine : t => bool = "" [@@bs.get];

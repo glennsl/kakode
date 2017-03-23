@@ -27,10 +27,15 @@ let handleKey editor state key => {
     /* edit */
     | 'd' => edit erase;
 
-    | 'o' => edit insertLineAbove |> then_ (selection moveDown) |> then_ (mode InsertMode.mode);
-    | 'O' => edit insertLineBelow |> then_ (selection moveUp) |> then_ (mode InsertMode.mode);
+    | 'o' => edit insertLineAbove |> then_ (selection moveDown) |> then_ (mode Mode.Insert);
+    | 'O' => edit insertLineBelow |> then_ (selection moveUp) |> then_ (mode Mode.Insert);
 
-    | 'i' => mode InsertMode.mode;
+    /* modes */
+    | 'i' => mode Mode.Insert;
+
+    /* micro modes */
+    | 'v' => mode Mode.ViewTransient;
+    | 'V' => mode Mode.ViewLocked;
 
     | _ => (fun _ _ => Promise.resolve state);
     };
@@ -38,8 +43,5 @@ let handleKey editor state key => {
   action editor state
 };
 
-let mode: Types.mode = {
-  handleKey,
-  cursor: TextEditorCursorStyle.block,
-  name: "Normal Mode"
-}
+let cursor = TextEditorCursorStyle.block;
+let name = "Normal Mode";

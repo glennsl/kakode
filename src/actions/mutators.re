@@ -10,7 +10,7 @@ let edit action =>
 
 let mode mode =>
   fun _ _ =>
-    Promise.resolve Types.{ mode: mode };
+    Promise.resolve State.{ mode: mode };
 
 let selection action =>
   fun editor state => {

@@ -13,6 +13,10 @@ S src/require
 B lib/bs/src/require
 S src/modes
 B lib/bs/src/modes
+S src/modes/submodes
+B lib/bs/src/modes/submodes
+S src/modes/micromodes
+B lib/bs/src/modes/micromodes
 S src/core
 B lib/bs/src/core
 S src/commands

@@ -6,8 +6,5 @@ let handleKey _ state key => {
   Promise.resolve state
 };
 
-let mode: Types.mode = {
-  handleKey,
-  cursor: TextEditorCursorStyle.line,
-  name: "Insert Mode"
-}
+let cursor = TextEditorCursorStyle.line;
+let name = "Insert Mode";
