@@ -4,6 +4,7 @@ open Require.Vscode;
 let handleKey editor state key => {
   open Mutators;
   open SelectionActions;
+  open HistoryActions;
 
   let action = 
     switch key {
@@ -16,6 +17,10 @@ let handleKey editor state key => {
     | 'b' => selection selectToPreviousWord;
     | 'x' => selection selectLine;
     | '%' => selection selectAll;
+
+    /* history */
+    | 'u' => undo;
+    | 'U' => redo;
 
     | 'i' => mode InsertMode.mode;
 
