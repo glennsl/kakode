@@ -2,9 +2,11 @@ open Require.Promise;
 open Require.Vscode;
 
 let handleKey editor state key => {
+  open Action;
   open Mutators;
-  open SelectionActions;
+  open EditActions;
   open HistoryActions;
+  open SelectionActions;
 
   let action = 
     switch key {
@@ -21,6 +23,12 @@ let handleKey editor state key => {
     /* history */
     | 'u' => undo;
     | 'U' => redo;
+
+    /* edit */
+    | 'd' => edit erase;
+
+    | 'o' => edit insertLineAbove |> then_ (selection moveDown) |> then_ (mode InsertMode.mode);
+    | 'O' => edit insertLineBelow |> then_ (selection moveUp) |> then_ (mode InsertMode.mode);
 
     | 'i' => mode InsertMode.mode;
 

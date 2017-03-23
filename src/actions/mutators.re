@@ -1,12 +1,19 @@
 open Require.Promise;
 open Require.Vscode;
 
-let selection action =>
+let edit action =>
   fun editor state => {
-    TextEditor.setSelection editor (action (editor |> TextEditor.selection) editor);
-    Promise.resolve state
+    editor
+    |> TextEditor.edit (fun builder => action builder editor)
+    |> Promise.then_ (fun _ => state)
   };
 
 let mode mode =>
   fun _ _ =>
     Promise.resolve Types.{ mode: mode };
+
+let selection action =>
+  fun editor state => {
+    TextEditor.setSelection editor (action (editor |> TextEditor.selection) editor);
+    Promise.resolve state
+  };

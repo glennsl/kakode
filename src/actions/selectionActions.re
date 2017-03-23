@@ -6,7 +6,7 @@ let move v h =>
     let p =
       selection
       |> Selection.active
-      |> Position.translate lineDelta::v charDelta::h;
+      |> Position.translate line::v char::h;
     Selection.make anchor::p active::p
   };
 
@@ -114,8 +114,8 @@ let selectLine selection editor => {
     |> TextDocument.lineAtPosition cursor
     |> TextLine.text;
 
-  let anchor = cursor |> Position.with_ character::0 ();
-  let active = cursor |> Position.with_ character::(String.length line) ();
+  let anchor = cursor |> Position.with_ char::0;
+  let active = cursor |> Position.with_ char::(String.length line);
   Selection.make ::anchor ::active
 };
 

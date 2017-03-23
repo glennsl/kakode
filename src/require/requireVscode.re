@@ -84,8 +84,8 @@ module Position = {
   external character : t => int = "" [@@bs.get];
   external line : t => int = "" [@@bs.get];
 
-  external translate : lineDelta::int => charDelta::int => position = "" [@@bs.send.pipe: t];
-  external with_ : line::int? => character::int? => unit => position = "with" [@@bs.send.pipe: t];
+  external translate : line::int? => char::int? => position = "" [@@bs.send.pipe: t];
+  external with_ : line::int? => char::int? => position = "with" [@@bs.send.pipe: t];
 };
 
 module Range = {
@@ -106,6 +106,8 @@ module Selection = {
   external isReversed : t => bool = "" [@@bs.get];
   external isSingleLine : t => bool = "" [@@bs.get];
   external start : t => position = "" [@@bs.get];
+
+  external with_ : start::position? => end_::position? => t = "with"  [@@bs.send.pipe: t];
 };
 
 module StatusBarItem = {

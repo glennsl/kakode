@@ -57,7 +57,7 @@ let advance iter =>
     if (isEol iter) {
       iter.pos = Position.make (Position.line iter.pos + 1) 0;
     } else {
-      iter.pos = Position.translate lineDelta::0 charDelta::1 iter.pos;
+      iter.pos = Position.translate char::1 iter.pos;
     };
     Some iter.pos
   };
@@ -81,7 +81,7 @@ let retreat iter =>
       let charIndex = iter.document |> TextDocument.lineAt lineIndex |> TextLine.text |> String.length;
       iter.pos = Position.make lineIndex charIndex;
     } else {
-      iter.pos = Position.translate lineDelta::0 charDelta::(-1) iter.pos;
+      iter.pos = Position.translate char::(-1) iter.pos;
     };
     Some iter.pos
   };
