@@ -30,6 +30,8 @@ let handleKey editor state key => {
     | 'o' => edit insertLineAbove |> then_ (selection moveDown) |> then_ (mode Mode.Insert);
     | 'O' => edit insertLineBelow |> then_ (selection moveUp) |> then_ (mode Mode.Insert);
 
+    | 'r' => mode Mode.Replace;
+
     /* modes */
     | 'i' => mode Mode.Insert;
 

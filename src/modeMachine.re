@@ -16,8 +16,9 @@ let sync self =>
 
     let (cursor, name) =
       switch (self.state.mode) {
-      | Normal => NormalMode.(cursor, name)
       | Insert => InsertMode.(cursor, name)
+      | Normal => NormalMode.(cursor, name)
+      | Replace => ReplaceMode.(cursor, name)
       | ViewTransient
       | ViewLocked => ViewMode.(cursor, name)
       };
@@ -45,8 +46,9 @@ let handleKey self key =>
   | None => ()
   | Some editor => {
     let modeHandleKey = switch (self.state.mode) {
-    | Normal => NormalMode.handleKey
     | Insert => InsertMode.handleKey
+    | Normal => NormalMode.handleKey
+    | Replace => ReplaceMode.handleKey
     | ViewTransient => ViewMode.handleKeyTransient
     | ViewLocked => ViewMode.handleKeyLocked
     };

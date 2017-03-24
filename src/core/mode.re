@@ -1,5 +1,6 @@
 type kind =
-| Normal
 | Insert
+| Normal
+| Replace
 | ViewTransient
 | ViewLocked;
