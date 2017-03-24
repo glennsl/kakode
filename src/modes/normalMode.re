@@ -4,6 +4,7 @@ open Require.Vscode;
 let handleKey editor state key => {
   open Action;
   open Mutators;
+  open CommandActions;
   open EditActions;
   open HistoryActions;
   open SelectionActions;
@@ -38,6 +39,8 @@ let handleKey editor state key => {
     /* micro modes */
     | 'v' => mode Mode.ViewTransient;
     | 'V' => mode Mode.ViewLocked;
+
+    | ':' => command;
 
     | _ => (fun _ _ => Promise.resolve state);
     };

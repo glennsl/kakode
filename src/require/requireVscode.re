@@ -64,8 +64,8 @@ module Vscode = {
     let showInformationMessage : string => unit =
       fun message => vscode##window##showInformationMessage message;
 
-    let showQuickPick : array (Js.t {..} as 'a) => Js.t {..} => Js.promise 'a unit =
-      fun items options => vscode##window##showQUickPick items options;
+    let showQuickPick : array 'a => Js.t {..} => Js.promise (Js.undefined 'a) unit =
+      fun items options => vscode##window##showQuickPick items options;
   };
 };
 
