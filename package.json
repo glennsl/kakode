@@ -1,9 +1,10 @@
 {
-    "name": "reasonable-vscode-starter",
-    "displayName": "reasonable-vscode-starter",
-    "description": "Starter project for vscode extensions written in Reason and BuckleScript",
+    "name": "kakode",
+    "displayName": "kakode",
+    "description": "Kakoune mode for Visual Studio Code",
     "version": "0.0.1",
-    "publisher": "",
+    "author": "glennsl",
+    "license": "MIT",
     "engines": {
         "vscode": "^1.10.0"
     },
