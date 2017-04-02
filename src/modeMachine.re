@@ -6,12 +6,14 @@ external logError : 'a => unit = "console.error" [@@bs.val];
 type t = {
   mutable state: State.t,
   modeIndicator: statusBarItem,
+  paramsIndicator: statusBarItem
 };
 
-let sync self =>
+let updateModeIndicator self => {
   switch (Vscode.Window.activeTextEditor ()) {
-  | None => ()
-  | Some editor => {
+  | None =>
+    StatusBarItem.setText self.modeIndicator ""
+  | Some editor =>
     let editorOptions = editor |> TextEditor.options;
 
     let (cursor, name) =
@@ -26,11 +28,38 @@ let sync self =>
 
     StatusBarItem.setText self.modeIndicator ("-- " ^ (name |> Js.String.toUpperCase) ^ " --");
   }
-  };
+};
+
+let updateParamsIndicator self => {
+  let formatCount count =>
+    "param=" ^ (string_of_int count);
+  let formatRegister (Register.Register symbol) =>
+    "reg=" ^ (symbol |> Char.code |> Js.String.fromCharCode);
+  let text =
+    switch (self.state.params.count, self.state.params.register) {
+    | (Some count, Some register) =>
+       formatCount count ^ ", " ^ formatRegister register;
+    | (Some count, None) =>
+      formatCount count
+    | (None, Some register) =>
+      formatRegister register
+    | (None, None) =>
+      ""
+    };
+  StatusBarItem.setText self.paramsIndicator text;
+};
+
+let sync self => {
+  updateModeIndicator self;
+  updateParamsIndicator self;
+};
 
 let make () => {
   let modeIndicator = Vscode.Window.createStatusBarItem StatusBarAlignment.left;
   StatusBarItem.show modeIndicator;
+
+  let paramsIndicator = Vscode.Window.createStatusBarItem StatusBarAlignment.right;
+  StatusBarItem.show paramsIndicator;
 
   let registers = Register.Collection.fromList [
     Register.makeStatic "a" (Register 'a') (),
@@ -44,7 +73,7 @@ let make () => {
     params: Params.default
   };
 
-  let self = { state, modeIndicator };
+  let self = { state, modeIndicator, paramsIndicator };
   sync self;
   self
 };
@@ -83,6 +112,6 @@ let handleKey self key =>
 };
 
 let escape self () => {
-  self.state = { ...self.state, mode: Mode.Normal };
+  self.state = { ...self.state, mode: Mode.Normal, params: Params.default };
   sync self
 };

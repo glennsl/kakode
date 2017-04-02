@@ -1,3 +1,4 @@
+open Require.Option;
 open Require.Promise;
 open Require.Vscode;
 
@@ -141,12 +142,26 @@ let actionByKey key => {
   loop bindings;
 };
 
-let handleKey editor params state key =>
+let handleKeyDigit state params key => {
+  let digit = int_of_char key - int_of_char '0';
+  let count = params.Params.count
+    |> Option.map (fun count => (count * 10) + digit)
+    |> Option.or_ (digit > 0 ? Some digit : None);
+  Promise.resolve State.{ ...state, params: { ...params, count }};
+};
+
+let handleKeyDefault editor state params key =>
   switch (actionByKey key) {
   | Some action =>
     action editor params state
   | None =>
     Promise.resolve state;
+  };
+
+let handleKey editor params state key =>
+  switch key {
+  | '0' .. '9' => handleKeyDigit state params key
+  | _ =>          handleKeyDefault editor state params key
   };
 
 let cursor = TextEditorCursorStyle.block;
