@@ -1,6 +1,8 @@
+type symbol = | Register of char;
+
 type t = {
   name: string,
-  symbol: char,
+  symbol: symbol,
   get: unit => list string,
   set: list string => unit
 };

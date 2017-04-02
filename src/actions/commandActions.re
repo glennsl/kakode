@@ -57,7 +57,7 @@ let commands = [
 |> List.flatten
 |> Array.of_list;
 
-let command _ state =>
+let command _ _ state =>
   Vscode.Window.showQuickPick commands { "placeHolder": ": command mode" }
   |> Promise.then_
       (fun (maybeItem: Js.undefined command) =>

@@ -1,4 +1,5 @@
 type t = {
+  registers: Register.Collection.t,
   mode: Mode.kind,
-  registers: Register.Collection.t
+  params: Params.t
 };

@@ -141,10 +141,10 @@ let actionByKey key => {
   loop bindings;
 };
 
-let handleKey editor state key =>
+let handleKey editor params state key =>
   switch (actionByKey key) {
   | Some action =>
-    action editor state
+    action editor params state
   | None =>
     Promise.resolve state;
   };

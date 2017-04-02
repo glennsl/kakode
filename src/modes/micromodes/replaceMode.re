@@ -1,7 +1,7 @@
 open Require.Promise;
 open Require.Vscode;
 
-let handleKey editor state key => {
+let handleKey editor _ state key => {
   editor |> TextEditor.edit (fun builder => 
     editor
     |> TextEditor.selections

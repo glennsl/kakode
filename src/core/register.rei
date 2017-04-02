@@ -1,7 +1,8 @@
 type t;
+type symbol = | Register of char;
 
-let makeStatic : string => char => initial::(list string)? => unit => t;
-let makeDynamic : string => char => get::(unit => list string) => set::(list string => unit) => t;
+let makeStatic : string => symbol => initial::(list string)? => unit => t;
+let makeDynamic : string => symbol => get::(unit => list string) => set::(list string => unit) => t;
 /*
 let get : t => string;
 let set : t => string => unit;
@@ -11,7 +12,7 @@ module Collection: {
   type t;
 
   let fromList : list register => t;
-  let find : char => t => register;
-  let get : char => t => list string;
-  let set : char => list string => t => unit;
+  let find : symbol => t => register;
+  let get : symbol => t => list string;
+  let set : symbol => list string => t => unit;
 };

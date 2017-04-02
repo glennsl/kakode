@@ -39,12 +39,12 @@ let handleKey' editor key => {
 
 };
 
-let handleKeyTransient editor state key => {
+let handleKeyTransient editor _ state key => {
   handleKey' editor key;
   Promise.resolve State.{ ...state, mode: Mode.Normal }
 };
 
-let handleKeyLocked editor state key => {
+let handleKeyLocked editor _ state key => {
   handleKey' editor key;
   Promise.resolve state
 };

@@ -33,14 +33,15 @@ let make () => {
   StatusBarItem.show modeIndicator;
 
   let registers = Register.Collection.fromList [
-    Register.makeStatic "a" 'a' (),
-    Register.makeStatic "b" 'b' (),
-    Register.makeDynamic "dot" '.' get::(fun () => []) set::(fun _ => ()),
+    Register.makeStatic "a" (Register 'a') (),
+    Register.makeStatic "b" (Register 'b') (),
+    Register.makeDynamic "dot" (Register '.') get::(fun () => []) set::(fun _ => ()),
   ];
 
   let state = State.{
     registers,
-    mode: Mode.Normal
+    mode: Mode.Normal,
+    params: Params.default
   };
 
   let self = { state, modeIndicator };
@@ -61,7 +62,12 @@ let handleKey self key =>
     };
   
     try {
-      modeHandleKey editor self.state key
+      /* Params are transient, so we "pop" it off here, replace it with the
+        default params and pass it separately to the key handler */
+      let { State.params } = self.state;
+      let state = { ...self.state, params: Params.default };
+
+      modeHandleKey editor params state key
       |> Promise.then_
         (fun state' =>
           /*if (state' != self.state)*/ {

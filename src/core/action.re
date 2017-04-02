@@ -1,7 +1,7 @@
 open Require.Promise;
 open Require.Vscode;
 
-type t = textEditor => State.t => Promise.t State.t unit;
+type t = textEditor => Params.t => State.t => Promise.t State.t unit;
 
 let then_ g f  =>
-  fun editor state => f editor state |> Promise.andThen (g editor);
+  fun editor params state => f editor params state |> Promise.andThen (g editor params);
