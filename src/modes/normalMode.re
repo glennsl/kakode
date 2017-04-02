@@ -12,20 +12,20 @@ open SelectionActions;
 let bindings = [
 
   /* move cursor */
-  ('h', "", selection moveLeft),
-  ('j', "", selection moveDown),
-  ('k', "", selection moveUp),
-  ('l', "", selection moveRight),
+  ('h', "", repeatable @@ selection moveLeft),
+  ('j', "", repeatable @@ selection moveDown),
+  ('k', "", repeatable @@ selection moveUp),
+  ('l', "", repeatable @@ selection moveRight),
   /*
   ('g', "", goto (micromode)),
   ('&', "", align selection cursors),
   */
 
   /* select */
-  ('w', "", selection selectToNextWord),
-  ('e', "", selection selectToNextWordEnd),
-  ('b', "", selection selectToPreviousWord),
-  ('x', "", selection selectLine),
+  ('w', "", repeatable @@ selection selectToNextWord),
+  ('e', "", repeatable @@ selection selectToNextWordEnd),
+  ('b', "", repeatable @@ selection selectToPreviousWord),
+  ('x', "", repeatable @@ selection selectLine),
   ('%', "", selection selectAll),
   /*
   ('m', "", select to matching character (micromode)),
