@@ -32,7 +32,14 @@ let make () => {
   let modeIndicator = Vscode.Window.createStatusBarItem StatusBarAlignment.left;
   StatusBarItem.show modeIndicator;
 
+  let registers = Register.Collection.fromList [
+    Register.makeStatic "a" 'a' (),
+    Register.makeStatic "b" 'b' (),
+    Register.makeDynamic "dot" '.' get::(fun () => []) set::(fun _ => ()),
+  ];
+
   let state = State.{
+    registers,
     mode: Mode.Normal
   };
 
@@ -70,6 +77,6 @@ let handleKey self key =>
 };
 
 let escape self () => {
-  self.state = { mode: Mode.Normal };
+  self.state = { ...self.state, mode: Mode.Normal };
   sync self
 };

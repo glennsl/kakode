@@ -9,8 +9,8 @@ let edit action =>
   };
 
 let mode mode =>
-  fun _ _ =>
-    Promise.resolve State.{ mode: mode };
+  fun _ state =>
+    Promise.resolve State.{ ...state, mode };
 
 let selection action =>
   fun editor state => {

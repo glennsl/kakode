@@ -1,7 +1,7 @@
 open Require.Promise;
 open Require.Vscode;
 
-let handleKey editor _ key => {
+let handleKey editor state key => {
   editor |> TextEditor.edit (fun builder => 
     editor
     |> TextEditor.selections
@@ -23,7 +23,7 @@ let handleKey editor _ key => {
           builder |> TextEditorEdit.replace range (key |> Char.code |> Js.String.fromCharCode |> Js.String.repeat length)
         }
       })
-  ) |> Promise.then_ (fun _ => State.{ mode: Mode.Normal })
+  ) |> Promise.then_ (fun _ => State.{...state,  mode: Mode.Normal })
 };
 
 let cursor = TextEditorCursorStyle.block;
