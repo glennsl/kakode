@@ -41,7 +41,12 @@
                 "regexp": "^(Error|Warning): (.*)$",
                 "severity": 1,
                 "message": 2
-            }
+            }/*,
+            {
+                "regexp": "^\\s+(.*)$",
+                "message": 1,
+                "loop": true
+            }*/
         ],
         "watching": {
             "activeOnStart": true,
