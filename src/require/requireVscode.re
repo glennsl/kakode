@@ -99,6 +99,8 @@ module Selection = {
 
   external make : anchor::position => active::position => t = "Selection" [@@bs.new] [@@bs.module "vscode"];
 
+  external asRange : t => range = "%identity";
+
   external active : t => position = "" [@@bs.get];
   external anchor : t => position = "" [@@bs.get];
   external end_ : t => position = "end" [@@bs.get];
@@ -123,6 +125,8 @@ module TextDocument = {
 
   external lineCount : t => int = "" [@@bs.get];
 
+  external getText : string = "" [@@bs.send.pipe: t];
+  external getTextRange : range => string = "getText" [@@bs.send.pipe: t];
   external lineAt : int => textLine = "" [@@bs.send.pipe: t];
   external lineAtPosition : position => textLine = "lineAt" [@@bs.send.pipe: t];
 };

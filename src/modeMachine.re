@@ -21,6 +21,7 @@ let updateModeIndicator self => {
       | Insert => InsertMode.(cursor, name)
       | Normal => NormalMode.(cursor, name)
       | Replace => ReplaceMode.(cursor, name)
+      | SelectRegisterMode => SelectRegisterMode.(cursor, name)
       | ViewTransient
       | ViewLocked => ViewMode.(cursor, name)
       };
@@ -64,7 +65,8 @@ let make () => {
   let registers = Register.Collection.fromList [
     Register.makeStatic "a" (Register 'a') (),
     Register.makeStatic "b" (Register 'b') (),
-    Register.makeDynamic "dot" (Register '.') get::(fun () => []) set::(fun _ => ()),
+    Register.makeDynamic "dot" (Register '.') get::(fun () => [||]) set::(fun _ => ()),
+    Register.makeStatic "dquote" (Register '"') (),
   ];
 
   let state = State.{
@@ -86,6 +88,7 @@ let handleKey self key =>
     | Insert => InsertMode.handleKey
     | Normal => NormalMode.handleKey
     | Replace => ReplaceMode.handleKey
+    | SelectRegisterMode => SelectRegisterMode.handleKey
     | ViewTransient => ViewMode.handleKeyTransient
     | ViewLocked => ViewMode.handleKeyLocked
     };

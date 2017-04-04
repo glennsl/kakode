@@ -3,11 +3,11 @@ type symbol = | Register of char;
 type t = {
   name: string,
   symbol: symbol,
-  get: unit => list string,
-  set: list string => unit
+  get: unit => array string,
+  set: array string => unit
 };
 
-let makeStatic name symbol ::initial=[] () => {
+let makeStatic name symbol ::initial=[||] () => {
   let content = ref initial;
   {
     name,

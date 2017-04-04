@@ -7,6 +7,7 @@ open Mutators;
 open CommandActions;
 open EditActions;
 open HistoryActions;
+open RegisterActions;
 open SelectionActions;
 
 let bindings = [
@@ -61,7 +62,8 @@ let bindings = [
 */
 
   /* edit */
-  ('d', "", edit erase),
+  ('d', "", yank |> then_ (edit erase)),
+  ('c', "", yank |> then_ (edit erase) |> then_ (mode Mode.Insert)),
 
   ('o', "", edit insertLineAbove |> then_ (selection moveDown) |> then_ (mode Mode.Insert)),
   ('O', "", edit insertLineBelow |> then_ (selection moveUp) |> then_ (mode Mode.Insert)),
@@ -69,8 +71,6 @@ let bindings = [
   ('r', "", mode Mode.Replace),
 
   /*
-  ('c', "", change),
-  
   ('<', "", deindent),
   ('>', "", indent),
 
@@ -92,13 +92,11 @@ let bindings = [
   ('V', "", mode Mode.ViewLocked),
 
   /* registers */
-  /*
-  ('"', "", select register),
-  ('y', "", yank selection),
-  ('p', "", paste after selection),
-  ('P', "", paste before selection),
-  ('R', "", replace selection with yanked),
-  */
+  ('"', "", mode Mode.SelectRegisterMode),
+  ('y', "", yank),
+  ('p', "", pasteAfter),
+  ('P', "", pasteBefore),
+  ('R', "", pasteReplace),
 
   /* search-ish */
   /*
