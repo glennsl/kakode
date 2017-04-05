@@ -13,9 +13,32 @@ let mode mode =>
   fun _ _ state =>
     Promise.resolve State.{ ...state, mode };
 
+let iterSelections action =>
+  fun editor => {
+    editor
+    |> TextEditor.selections
+    |> Array.iter (action editor)
+  };
+
+let eachSelection action =>
+  fun editor _ state => {
+    editor
+    |> TextEditor.selections
+    |> Array.map (action editor)
+    |> TextEditor.setSelections editor;
+    
+    Promise.resolve state
+  };
+
 let selection action =>
   fun editor _ state => {
-    TextEditor.setSelection editor (action (editor |> TextEditor.selection) editor);
+    TextEditor.setSelection editor (action editor (editor |> TextEditor.selection));
+    Promise.resolve state
+  };
+
+let selections action =>
+  fun editor _ state => {
+    TextEditor.setSelections editor (action (editor |> TextEditor.selections) editor);
     Promise.resolve state
   };
 

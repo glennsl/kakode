@@ -13,20 +13,20 @@ open SelectionActions;
 let bindings = [
 
   /* move cursor */
-  ('h', "", repeatable @@ selection moveLeft),
-  ('j', "", repeatable @@ selection moveDown),
-  ('k', "", repeatable @@ selection moveUp),
-  ('l', "", repeatable @@ selection moveRight),
+  ('h', "", repeatable @@ eachSelection moveLeft),
+  ('j', "", repeatable @@ eachSelection moveDown),
+  ('k', "", repeatable @@ eachSelection moveUp),
+  ('l', "", repeatable @@ eachSelection moveRight),
   /*
   ('g', "", goto (micromode)),
   ('&', "", align selection cursors),
   */
 
   /* select */
-  ('w', "", repeatable @@ selection selectToNextWord),
-  ('e', "", repeatable @@ selection selectToNextWordEnd),
-  ('b', "", repeatable @@ selection selectToPreviousWord),
-  ('x', "", repeatable @@ selection selectLine),
+  ('w', "", repeatable @@ eachSelection selectToNextWord),
+  ('e', "", repeatable @@ eachSelection selectToNextWordEnd),
+  ('b', "", repeatable @@ eachSelection selectToPreviousWord),
+  ('x', "", repeatable @@ eachSelection selectLine),
   ('%', "", selection selectAll),
   /*
   ('m', "", select to matching character (micromode)),
@@ -62,11 +62,11 @@ let bindings = [
 */
 
   /* edit */
-  ('d', "", yank |> then_ (edit erase)),
-  ('c', "", yank |> then_ (edit erase) |> then_ (mode Mode.Insert)),
+  ('d', "", yank |> then_ (edit (fun builder => iterSelections (erase builder)))),
+  ('c', "", yank |> then_ (edit (fun builder => iterSelections (erase builder))) |> then_ (mode Mode.Insert)),
 
-  ('o', "", edit insertLineAbove |> then_ (selection moveDown) |> then_ (mode Mode.Insert)),
-  ('O', "", edit insertLineBelow |> then_ (selection moveUp) |> then_ (mode Mode.Insert)),
+  ('o', "", repeatable @@ edit (fun builder => iterSelections (insertLineAbove builder)) |> then_ (eachSelection moveDown) |> then_ (mode Mode.Insert)),
+  ('O', "", repeatable @@ edit (fun builder => iterSelections (insertLineBelow builder)) |> then_ (eachSelection moveUp) |> then_ (mode Mode.Insert)),
 
   ('r', "", mode Mode.Replace),
 
@@ -129,7 +129,7 @@ let bindings = [
   ('$', "", // pipe each selection through shell command and keep the ones whose command succeed),
   */
 
-  (':', "", command),
+  (':', "", command)
 ];
 
 let actionByKey key => {

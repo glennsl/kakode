@@ -145,6 +145,7 @@ module TextEditor = {
   external selection : t => selection = "" [@@bs.get];
   external setSelection : t => selection => unit = "selection" [@@bs.set];
   external selections : t => array selection = "" [@@bs.get];
+  external setSelections : t => array selection => unit = "selections" [@@bs.set];
 
   external edit : (textEditorEdit => unit) => Js.promise Js.boolean unit = "" [@@bs.send.pipe: t];
   external revealRange : range => TextEditorRevealType.t => unit = "" [@@bs.send.pipe: t];

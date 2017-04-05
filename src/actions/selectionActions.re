@@ -2,7 +2,7 @@ open Require.Option;
 open Require.Vscode;
 
 let move v h =>
-  fun selection (_: textEditor) => {
+  fun (_: textEditor) selection => {
     let p =
       selection
       |> Selection.active
@@ -15,7 +15,7 @@ let moveDown = move 1 0;
 let moveUp = move (-1) 0;
 let moveRight = move 0 1;
 
-let selectToNextWord selection editor => {
+let selectToNextWord editor selection => {
   open DocumentIterator;
 
   let iterator = make (TextEditor.document editor) (Selection.active selection);
@@ -45,7 +45,7 @@ let selectToNextWord selection editor => {
   }
 };
 
-let selectToNextWordEnd selection editor => {
+let selectToNextWordEnd editor selection => {
   open DocumentIterator;
 
   let iterator = make (TextEditor.document editor) (Selection.active selection);
@@ -76,7 +76,7 @@ let selectToNextWordEnd selection editor => {
   }
 };
 
-let selectToPreviousWord selection editor => {
+let selectToPreviousWord editor selection => {
   open DocumentIterator;
 
   let iterator = make (TextEditor.document editor) (Selection.active selection);
@@ -107,7 +107,7 @@ let selectToPreviousWord selection editor => {
   }
 };
 
-let selectLine selection editor => {
+let selectLine editor selection => {
   let cursor = selection |> Selection.active;
   let line = editor
     |> TextEditor.document
@@ -119,7 +119,7 @@ let selectLine selection editor => {
   Selection.make ::anchor ::active
 };
 
-let selectAll _ editor => {
+let selectAll editor _ => {
   let document = editor |> TextEditor.document;
   let lastLineIndex = (document |> TextDocument.lineCount) - 1;
   let lastCharIndex = (document |> TextDocument.lineAt lastLineIndex |> TextLine.text |> String.length);
