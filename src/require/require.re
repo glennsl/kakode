@@ -6,4 +6,4 @@ module Promise = {
   module Promise = Js.Promise;
 };
 
-module Vscode = RequireVscode;
+module Vscode = Vscode;

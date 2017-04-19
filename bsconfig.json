@@ -10,5 +10,5 @@
       "require"
     ]
   }],
-  "bs-dependencies": ["rebase"]
+  "bs-dependencies": ["rebase", "bs-vscode"]
 }

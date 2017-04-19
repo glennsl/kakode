@@ -31,7 +31,8 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "dependencies": {
-        "rebase": "glennsl/rebase"
+        "rebase": "glennsl/rebase",
+        "bs-vscode": "glennsl/bs-vscode"
     },
     "devDependencies": {
         "vscode": "^1.0.0",

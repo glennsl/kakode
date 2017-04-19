@@ -5,6 +5,8 @@ B /home/glennsl/dev.github/kakode/node_modules/bs-platform/lib/ocaml
 FLG -nostdlib -no-alias-deps -color always -w -40+6+7+27+32..39+44+45
 S /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
 B /home/glennsl/dev.github/kakode/node_modules/rebase/lib/ocaml
+S /home/glennsl/dev.github/kakode/node_modules/bs-vscode/lib/ocaml
+B /home/glennsl/dev.github/kakode/node_modules/bs-vscode/lib/ocaml
 S src
 B lib/bs/src
 S src/require
