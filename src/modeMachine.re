@@ -104,7 +104,7 @@ let handleKey self key =>
         (fun state' =>
           /*if (state' != self.state)*/ {
             self.state = state';
-            sync self
+            Promise.resolve (sync self)
           }
         )
       |> ignore;

@@ -10,5 +10,5 @@
       "require"
     ]
   }],
-  "bs-dependencies": ["bs-promise", "rebase"]
+  "bs-dependencies": ["rebase"]
 }

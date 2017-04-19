@@ -23,7 +23,7 @@ let handleKey editor _ state key => {
           builder |> TextEditorEdit.replace range (key |> Char.code |> Js.String.fromCharCode |> Js.String.repeat length)
         }
       })
-  ) |> Promise.then_ (fun _ => State.{...state,  mode: Mode.Normal })
+  ) |> Promise.then_ (fun _ => Promise.resolve State.{...state,  mode: Mode.Normal })
 };
 
 let cursor = TextEditorCursorStyle.block;

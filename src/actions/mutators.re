@@ -6,7 +6,7 @@ let edit action =>
   fun editor _ state => {
     editor
     |> TextEditor.edit (fun builder => action builder editor)
-    |> Promise.then_ (fun _ => state)
+    |> Promise.then_ (fun _ => Promise.resolve state)
   };
 
 let mode mode =>
@@ -46,7 +46,7 @@ let repeatable action =>
   fun editor params state => {
     let rec loop = fun
     | 1 => action editor params state
-    | i => (loop (i - 1)) |> Promise.andThen (action editor params);
+    | i => (loop (i - 1)) |> Promise.then_ (action editor params);
 
     loop (params.Params.count |> Option.getOr 1);
   };

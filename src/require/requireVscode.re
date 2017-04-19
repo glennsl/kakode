@@ -64,7 +64,7 @@ module Vscode = {
     let showInformationMessage : string => unit =
       fun message => vscode##window##showInformationMessage message;
 
-    let showQuickPick : array 'a => Js.t {..} => Js.promise (Js.undefined 'a) unit =
+    let showQuickPick : array 'a => Js.t {..} => Js.Promise.t (Js.undefined 'a) =
       fun items options => vscode##window##showQuickPick items options;
   };
 };
@@ -147,7 +147,7 @@ module TextEditor = {
   external selections : t => array selection = "" [@@bs.get];
   external setSelections : t => array selection => unit = "selections" [@@bs.set];
 
-  external edit : (textEditorEdit => unit) => Js.promise Js.boolean unit = "" [@@bs.send.pipe: t];
+  external edit : (textEditorEdit => unit) => Js.Promise.t Js.boolean = "" [@@bs.send.pipe: t];
   external revealRange : range => TextEditorRevealType.t => unit = "" [@@bs.send.pipe: t];
 };
 

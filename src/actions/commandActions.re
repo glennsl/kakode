@@ -59,11 +59,12 @@ let commands = [
 
 let command _ _ state =>
   Vscode.Window.showQuickPick commands { "placeHolder": ": command mode" }
-  |> Promise.then_
+  |> Js.Promise.then_
       (fun (maybeItem: Js.undefined command) =>
-        switch (Js.Undefined.to_opt maybeItem) {
-        | Some item => let a = item##action; a ()
-        | None => ()
-        }
+        Promise.resolve @@
+            switch (Js.Undefined.to_opt maybeItem) {
+            | Some item => let a = item##action; a ()
+            | None => ()
+            }
       )
-  |> Promise.then_ (fun _ => state);
+  |> Promise.then_ (fun _ => Promise.resolve state);

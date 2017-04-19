@@ -27,7 +27,7 @@ let pasteAfter editor params state => {
           TextEditorEdit.insert pos text builder;
         })
   ) editor
-  |> Promise.then_ (fun _ => state);
+  |> Promise.then_ (fun _ => Promise.resolve state);
 };
 
 let pasteBefore editor params state => {
@@ -44,7 +44,7 @@ let pasteBefore editor params state => {
           TextEditorEdit.insert pos text builder;
         })
   ) editor
-  |> Promise.then_ (fun _ => state);
+  |> Promise.then_ (fun _ => Promise.resolve state);
 };
 
 let pasteReplace editor params state => {
@@ -61,5 +61,5 @@ let pasteReplace editor params state => {
           TextEditorEdit.replace range text builder;
         })
   ) editor
-  |> Promise.then_ (fun _ => state);
+  |> Promise.then_ (fun _ => Promise.resolve state);
 };

@@ -3,7 +3,7 @@ module Option = {
 };
 
 module Promise = {
-  module Promise = Bs_promise;
+  module Promise = Js.Promise;
 };
 
 module Vscode = RequireVscode;
