@@ -11,7 +11,7 @@
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [ "${workspaceRoot}/lib/js/src/**/*.js" ],
-            "preLaunchTask": "npm"
+            "preLaunchTask": "bsb"
         },
         {
             "name": "Launch Tests",
@@ -22,7 +22,7 @@
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [ "${workspaceRoot}/lib/js/test/**/*.js" ],
-            "preLaunchTask": "npm"
+            "preLaunchTask": "bsb"
         }
     ]
 }

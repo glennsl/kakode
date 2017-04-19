@@ -8,52 +8,38 @@
 
 // A task runner that calls a custom npm script that compiles the extension.
 {
-    "version": "0.1.0",
-
-    // we want to run npm
-    "command": "npm",
-
-    // the command is a shell script
+    "command": "bsb",
+    "options": {
+        "cwd": "${workspaceRoot}"
+    },
     "isShellCommand": true,
-
-    // show the output window only if unrecognized errors occur.
-    //"showOutput": "silent",
-
-    // we run the custom script "compile" as defined in package.json
-    "args": ["run", "compile", "--loglevel", "silent"],
-
-    // The tsc compiler is started in watching mode
-    "isBackground": true,
-
-    // use the standard tsc in watch mode problem matcher to find compile problems in the output.
+    "args": [
+        "-w"
+    ],
+    "showOutput": "always",
+    "isWatching": true,
     "problemMatcher": {
-        "owner": "reasonml",
         "fileLocation": "absolute",
+        "owner": "ocaml",
+        "watching": {
+            "activeOnStart": true,
+            "beginsPattern": ">>>> Start compiling",
+            "endsPattern": ">>>> Finish compiling"
+        },
         "pattern": [
             {
-                "regexp": "^File \"(.*)\", line (\\d+), characters (\\d+)-(\\d+):$",
+                "regexp": "^File \"(.*)\", line (\\d+)(?:, characters (\\d+)-(\\d+))?:$",
                 "file": 1,
                 "line": 2,
                 "column": 3,
                 "endColumn": 4
             },
             {
-                "regexp": "^(Error|Warning): (.*)$",
+                "regexp": "^(?:(?:Parse\\s+)?(Warning|[Ee]rror)(?:\\s+\\d+)?:)?\\s+(.*)$",
                 "severity": 1,
-                "message": 2
-            }/*,
-            {
-                "regexp": "^\\s+(.*)$",
-                "message": 1,
+                "message": 2,
                 "loop": true
-            }*/
-        ],
-        "watching": {
-            "activeOnStart": true,
-            "beginsPattern": "^>>>> Start compiling$",
-            "endsPattern": "^>>>> Finish compiling$"
-        }
+            }
+        ]
     }
-
-    /*"_runner": "terminal"*/
 }
